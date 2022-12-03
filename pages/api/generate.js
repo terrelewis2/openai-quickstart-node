@@ -9,21 +9,21 @@ const openai = new OpenAIApi(configuration);
 export default async function (req, res) {
 
   //console.log("Request:", req.body.age)
-  //const prompt =  generateBios(req.body.age, req.body.gender, req.body.city, req.body.profession, req.body.personality, req.body.hobbies, req.body.country, req.body.lookingFor)
+  const prompt =  generateBios(req.body.age, req.body.gender, req.body.city, req.body.profession, req.body.personality, req.body.hobbies, req.body.country, req.body.lookingFor)
   //complete.bios
 
-  // const completion = await openai.createCompletion({
-  //   model: "text-davinci-003",
-  //   prompt: prompt,
-  //   temperature: 0.9,
-  //   max_tokens: 1024,
-  //   top_p: 1,
-  //   frequency_penalty: 0,
-  //   n:5,
-  //   presence_penalty: 0.6
-  // });
+  const completion = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: prompt,
+    temperature: 0.9,
+    max_tokens: 1024,
+    top_p: 1,
+    frequency_penalty: 0,
+    n:5,
+    presence_penalty: 0.6
+  });
   //console.log("Choices:-->",  completion.data.choices)
-  res.status(200).json({ result: "Hello World" });
+  res.status(200).json({ result: completion.data.choices });
 }
 
 // const generateDatingPrompt(name, age, hobbies, lookingFor)={
