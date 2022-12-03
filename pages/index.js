@@ -20,20 +20,20 @@ export default function Home() {
   async function onSubmit(event) {
     event.preventDefault();
     const response = await fetch("/api/generate", {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        age: ageInput,
-        city: cityInput,
-        gender: genderInput,
-        profession: professionInput,
-        country: countryInput,
-        personality: personalityInput,
-        hobbies: hobbiesInput,
-        lookingFor: lookingForInput
-      }),
+      // body: JSON.stringify({
+      //   age: ageInput,
+      //   city: cityInput,
+      //   gender: genderInput,
+      //   profession: professionInput,
+      //   country: countryInput,
+      //   personality: personalityInput,
+      //   hobbies: hobbiesInput,
+      //   lookingFor: lookingForInput
+      // }),
     });
     const data = await response.json();
     //console.log("Data-->", data)
