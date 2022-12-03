@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>OpenAI Quickstart</title>
+        <title>Bio Generator</title>
         <link rel="icon" href="/heart-png.webp" />
       </Head>
 
@@ -148,7 +148,7 @@ export default function Home() {
           />
           <input type="submit" value="Genrate my dating bio" />
         </form>
-        {<div style={{ marginTop: "20px", fontSize: "20px", fontWeight: "bold" }}>{status}</div>}
+        {<div style={{ marginTop: "20px", fontSize: "20px", fontWeight: "bold", textAlign:"center" }}>{status}</div>}
         {result.map((el) => {
           return <>
             <div className={styles.result} style={{ width: "70%", marginTop: "0px !important" }}>{el.text}</div>
