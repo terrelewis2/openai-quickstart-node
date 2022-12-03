@@ -3,11 +3,19 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
   const [ageInput, setAgeInput] = useState("");
+  const [cityInput, setCityInput] = useState("");
+  const [countryInput, setCountryInput] = useState("");
+  const [professionInput, setProfessionInput] = useState("")
   const [hobbiesInput, setHobbiesInput] = useState("")
   const [lookingForInput, setLookingForInput] = useState("")
+  const [lookingForValue, setLookingForValue] = useState("");
+  const [genderInput, setGenderInput] = useState("")
+  const [genderValue, setGenderValue] = useState("")
+  const [personalityInput, setPersonalityInput] = useState("")
+  const [personalityValue, setPersonalityValue] = useState("")
   const [result, setResult] = useState([]);
+
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -16,36 +24,49 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ animal: animalInput,
-      age: ageInput,
-      hobbies: hobbiesInput,
-      lookingFor: lookingForInput
+      body: JSON.stringify({
+        age: ageInput,
+        city: cityInput,
+        gender: genderInput,
+        profession: professionInput,
+        country: countryInput,
+        personality: personalityInput,
+        hobbies: hobbiesInput,
+        lookingFor: lookingForInput
       }),
     });
     const data = await response.json();
-    console.log("Data-->", data)
+    //console.log("Data-->", data)
     setResult([...data.result]);
-    console.log("Result :-->", result);
+    //console.log("Result :-->", result);
   }
 
   return (
     <div>
       <Head>
         <title>OpenAI Quickstart</title>
-        <link rel="icon" href="/dog.png" />
+        <link rel="icon" href="/heart-png.webp" />
       </Head>
 
       <main className={styles.main}>
-        <img src="/dog.png" className={styles.icon} />
+        <img src="/heart-png.webp" className={styles.icon} />
         <h3>Dating Expert</h3>
         <form onSubmit={onSubmit}>
           <input
             type="text"
-            name="animal"
-            placeholder="What's your name?"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+            name="city"
+            placeholder="Which city are you from?"
+            value={cityInput}
+            onChange={(e) => setCityInput(e.target.value)}
           />
+          <input
+            type="text"
+            name="country"
+            placeholder="Which country are you from?"
+            value={countryInput}
+            onChange={(e) => setCountryInput(e.target.value)}
+          />
+
           <input
             type="text"
             name="age"
@@ -53,13 +74,65 @@ export default function Home() {
             value={ageInput}
             onChange={(e) => setAgeInput(e.target.value)}
           />
-          <label for="cars">Choose a car:</label>
-<select id="cars" name="carlist" form="carform">
-  <option value="male">Male</option>
-  <option value="femal">Saab</option>
-  <option value="opel">Opel</option>
-  <option value="audi">Audi</option>
-</select>
+
+          <input
+            type="text"
+            name="profession"
+            placeholder="Profession"
+            value={professionInput}
+            onChange={(e) => setProfessionInput(e.target.value)}
+          />
+          <select
+            value={genderValue}
+            onChange={(e) => {
+              setGenderValue(e.target.value);
+              setGenderInput(e.target.value);
+            }}
+          >
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <select
+            value={personalityValue}
+            onChange={(e) => {
+              setPersonalityValue(e.target.value);
+              setPersonalityInput(e.target.value);
+            }}
+          >
+            <option value="" default selected hidden>What's your personality type?</option>
+            <option value="ISTJ">ISTJ</option>
+            <option value="ISFJ">ISFJ</option>
+            <option value="INFJ">INFJ</option>
+            <option value="INTJ">INTJ</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ISFP">ISFP</option>
+            <option value="INFP">INFP</option>
+            <option value="INTP">INTP</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ESFP">ESFP</option>
+            <option value="ENFP">ENFP</option>
+            <option value="ENTP">ENTP</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="ENTJ">ENTJ</option>
+          </select>
+
+          <label>
+            <a class="link" href="https://en.wikipedia.org/wiki/Myers%E2%80%93Briggs_Type_Indicator#/media/File:MyersBriggsTypes.png" target="_blank">Find your personality type</a>
+          </label>
+          <select
+            value={lookingForValue}
+            onChange={(e) => {
+              setLookingForValue(e.target.value);
+              setLookingForInput(e.target.value);
+            }}
+          >
+            <option value="long term relationship">Long Term Relationship</option>
+            <option value="something casual">Something Casual</option>
+            <option value="just friends">Just Friends</option>
+            <option value="open to anything">Open To Anything</option>
+          </select>
           <input
             type="text"
             name="hobbies"
@@ -67,22 +140,15 @@ export default function Home() {
             value={hobbiesInput}
             onChange={(e) => setHobbiesInput(e.target.value)}
           />
-          <input
-            type="text"
-            name="looking_for"
-            placeholder="What are you looking for?"
-            value={lookingForInput}
-            onChange={(e) => setLookingForInput(e.target.value)}
-          />
-          <input type="submit" value="Ask Love Guru" />
+          <input type="submit" value="Genrate my dating bio" />
         </form>
-        {result.length == 0 ?  <div style={{ marginTop:"20px", fontSize: "20px", fontWeight: "bold"}}>Please Wait... </div> :  <div style={{ marginTop:"20px", fontSize: "20px", fontWeight: "bold"}}>Your bio is ready</div> }
-        {result.map((el)=>{
+        {result.length == 0 ? <div style={{ marginTop: "20px", fontSize: "20px", fontWeight: "bold" }}>Please Wait... </div> : <div style={{ marginTop: "20px", fontSize: "20px", fontWeight: "bold" }}>Your bio is ready</div>}
+        {result.map((el) => {
           return <>
-           <div className={styles.result} style={{width: "70%", marginTop: "0px !important"}}>{el.text}</div>
+            <div className={styles.result} style={{ width: "70%", marginTop: "0px !important" }}>{el.text}</div>
           </>
         })}
-        
+
       </main>
     </div>
   );

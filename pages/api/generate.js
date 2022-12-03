@@ -8,8 +8,8 @@ const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
 
-  console.log("Request:", req.body.age)
-  const prompt =  generateBios(req.body.age, "Bangalore", req.body.hobbies, "India", req.body.lookingFor)
+  //console.log("Request:", req.body.age)
+  const prompt =  generateBios(req.body.age, req.body.gender, req.body.city, req.body.profession, req.body.personality, req.body.hobbies, req.body.country, req.body.lookingFor)
   //complete.bios
 
   const completion = await openai.createCompletion({
@@ -22,7 +22,7 @@ export default async function (req, res) {
     n:5,
     presence_penalty: 0.6
   });
-  console.log("Choices:-->",  completion.data.choices)
+  //console.log("Choices:-->",  completion.data.choices)
   res.status(200).json({ result: completion.data.choices });
 }
 
@@ -37,15 +37,17 @@ export default async function (req, res) {
 // }
 
 
-const generateBios = (age, location, interests, country, lookingFor) => {
+const generateBios = (age, gender, city, profession, personality, interests, country, lookingFor) => {
   // if (!LOOKING_FOR_OPTIONS.includes(lookingFor)) {
   //   throw new Error(`Invalid lookingFor value: ${lookingFor}. Must be one of: ${LOOKING_FOR_OPTIONS.join(", ")}`);
   // }
-  console.log("Age", age)
-  var prompt = `I am a ${age}-year-old living in ${location}, ${country}. My interests include ${interests}. I'm looking for ${lookingFor}.\n\n`;
-  prompt += "Tell me more about myself.\n";
+  //console.log("Age", age)
+  var prompt = `I am a ${age}-year-old ${gender} living in ${city}, ${country}. I am a ${profession} by profession. My interests include ${interests}. I'm looking for ${lookingFor}\n\n`;
+  prompt += "Tell me more about myself\n";
   prompt += "Make my bio funny and witty.\n";
-  prompt += "Make my looking_for statement funny and witty.\n";
+  prompt += "Make my looking_for value funny and witty.\n";
+  prompt += "Make it attractive to the opposite gender\n";
+  prompt += `Add traits of a ${personality} person in the bio in a subtle way without mentioning the personality type`
   console.log("Prompt:-->",  prompt)
   return prompt
   // return openai
