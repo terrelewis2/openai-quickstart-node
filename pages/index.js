@@ -15,10 +15,12 @@ export default function Home() {
   const [personalityInput, setPersonalityInput] = useState("")
   const [personalityValue, setPersonalityValue] = useState("")
   const [result, setResult] = useState([]);
+  const [status, setStatus] = useState("");
 
 
   async function onSubmit(event) {
     event.preventDefault();
+    setStatus("Your bio options are being generated...")
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -37,6 +39,7 @@ export default function Home() {
     });
     const data = await response.json();
     //console.log("Data-->", data)
+    setStatus("Your bio options are ready!")
     setResult([...data.result]);
     //console.log("Result :-->", result);
   }
@@ -50,7 +53,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <img src="/heart-png.webp" className={styles.icon} />
-        <h3>Dating Expert</h3>
+        <h3>Dating App Bio Generator</h3>
         <form onSubmit={onSubmit}>
           <input
             type="text"
@@ -93,6 +96,7 @@ export default function Home() {
             <option value="Female">Female</option>
           </select>
           <select
+            style={{marginBottom:'6px'}}
             value={personalityValue}
             onChange={(e) => {
               setPersonalityValue(e.target.value);
@@ -121,6 +125,8 @@ export default function Home() {
           <label>
             <a class="link" href="https://en.wikipedia.org/wiki/Myers%E2%80%93Briggs_Type_Indicator#/media/File:MyersBriggsTypes.png" target="_blank">Find your personality type</a>
           </label>
+
+
           <select
             value={lookingForValue}
             onChange={(e) => {
@@ -142,7 +148,7 @@ export default function Home() {
           />
           <input type="submit" value="Genrate my dating bio" />
         </form>
-        {result.length == 0 ? <div style={{ marginTop: "20px", fontSize: "20px", fontWeight: "bold" }}>Please Wait... </div> : <div style={{ marginTop: "20px", fontSize: "20px", fontWeight: "bold" }}>Your bio is ready</div>}
+        {<div style={{ marginTop: "20px", fontSize: "20px", fontWeight: "bold" }}>{status}</div>}
         {result.map((el) => {
           return <>
             <div className={styles.result} style={{ width: "70%", marginTop: "0px !important" }}>{el.text}</div>

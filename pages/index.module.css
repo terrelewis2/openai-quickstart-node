@@ -64,3 +64,14 @@
   font-weight: bold;
   margin-top: 40px;
 }
+
+.main select {
+  padding: 12px 16px;
+  border: 1px solid #10a37f;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.main label {
+  margin-bottom: 24px;
+}
